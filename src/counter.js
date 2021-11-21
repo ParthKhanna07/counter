@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Loader from './loader';
+
 
 export default class Counter extends Component {
   constructor (props) {
@@ -7,111 +9,130 @@ export default class Counter extends Component {
     this.state = {
       count: 1,
       load: false,
-    
+
       isEditing: false
     }
   }
 
   componentDidMount () {
-    // const url =
-    //   'https://interview-8e4c5-default-rtdb.firebaseio.com/front-end/counter1.json'
-    // axios
-    //   .get(url)
-    //   .then(result => {
-    //     this.setState({ count: result.data ? result.data : 0 })
-    //     console.log(result.data)
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
+    
+
+   
+    const url =
+      'https://interview-8e4c5-default-rtdb.firebaseio.com/front-end/parthkhanna.json'
+
+    axios
+      .get(url)
+      .then(result => {
+        this.setState({ count: result.data ? result.data : 1 })
+        //console.log(result.data)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      .finally(() => {
+        //console.log("i should go second");
+      })
+      
   }
 
   handleChange (e) {
-    this.setState({ count: e.target.value })
+    //console.log(typeof(e.target.value))
+    this.setState({ count: parseInt(e.target.value) })
   }
 
   handleKeyDown = event => {
+    this.setState({ load: true })
+    
     if (event.key === 'Enter') {
-      // const url =
-      //   'https://interview-8e4c5-default-rtdb.firebaseio.com/front-end.json'
-      // var post = this.state.count
+      const url =
+        'https://interview-8e4c5-default-rtdb.firebaseio.com/front-end.json'
+      var post = this.state.count
 
-      // const params = JSON.stringify({
-      //   parthkhanna: post
-      // })
-      // this.setState({ load: true })
-      // axios
-      //   .put(url, params, {
-      //     headers: {
-      //       'content-type': 'application/json; charset=utf-8'
-      //     }
-      //   })
-      //   .then(result => {
-      //     console.log(result)
-      //     console.log(this.state.count)
-      //   })
-      //   .catch(error => {
-      //     console.log(error)
-      //   })
-      // this.setState({ load: false })
+      const params = JSON.stringify({
+        parthkhanna: post
+      })
+      this.setState({ load: true })
+      axios
+        .put(url, params, {
+          headers: {
+            'content-type': 'application/json; charset=utf-8'
+          }
+        })
+        .then(result => {
+          // console.log(result)
+          // console.log(this.state.count)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      //this.setState({ load: false })
       this.setState({ count: this.state.count })
       this.setState({ isEditing: false })
     }
   }
 
   handleIncrement = e => {
-    // const url =
-    //   'https://interview-8e4c5-default-rtdb.firebaseio.com/front-end.json'
-    // var post = this.state.count ? this.state.count : 1
+  
+    this.setState({load: true})
+    const url =
+      'https://interview-8e4c5-default-rtdb.firebaseio.com/front-end.json'
 
-    // const params = JSON.stringify({
-    //   parthkhanna: post
-    // })
-    // this.setState({ load: true })
-    // axios
-    //   .put(url, params, {
-    //     headers: {
-    //       'content-type': 'application/json; charset=utf-8'
-    //     }
-    //   })
-    //   .then(result => {
-    //     console.log(result)
-    //     console.log(this.state.count)
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
-    // this.setState({ load: false })
-    var x = this.state.count + 1
-    if (this.state.count != 1000) this.setState({ count: x })
+    let post = this.state.count != 1000 ? this.state.count + 1 : 1000
+
+    const params = JSON.stringify({
+      parthkhanna: post
+    })      
+     axios.put(url, params, {
+        headers: {
+          'content-type': 'application/json; charset=utf-8'
+        }
+      })
+      .then(result => {
+        // console.log(result)
+        // console.log(result.data)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      .finally(() => {
+        //console.log("i should go second");
+      })
+
+    this.setState({ count: post })
+   
   }
 
   handleDecrement = e => {
-    // const url =
-    //   'https://interview-8e4c5-default-rtdb.firebaseio.com/front-end.json'
-    // const post = this.state.count - 1
+    this.setState({ load: true })
+    
+   
 
-    // const params = JSON.stringify({
-    //   prashant: post
-    // })
+    const url =
+      'https://interview-8e4c5-default-rtdb.firebaseio.com/front-end.json'
+    let post = this.state.count != 1 ? this.state.count - 1 : 1
 
-    // this.setState({ load: true })
+    const params = JSON.stringify({
+      parthkhanna: post
+    })
 
-    // // console.log(user); console.log(post);
-    // axios
-    //   .put(url, params, {
-    //     headers: {
-    //       'content-type': 'application/json'
-    //     }
-    //   })
-    //   .then(result => {})
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
+    this.setState({ load: true })
 
-    // this.setState({ load: false })
+    // console.log(user); console.log(post);
+    axios
+      .put(url, params, {
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      .then(result => {})
+      .catch(error => {
+        console.log(error)
+      })
 
-    if (this.state.count != 0) this.setState({ count: this.state.count - 1 })
+    //this.setState({ load: false })
+
+    this.setState({ count: post })
   }
 
   render () {
@@ -133,16 +154,32 @@ export default class Counter extends Component {
             backgroundColor: 'white'
           }}
         >
-          {!this.state.load ? <div style={{ textAlign: 'left', marginBottom: '5px', height: '16px', fontSize:'12px',fontWeight: '500',}}>Saving counter value</div> : <span></span>}
+          {this.state.load ? (
+            <div
+              style={{
+                textAlign: 'left',
+                marginBottom: '5px',
+                height: '16px',
+                fontSize: '12px',
+                fontWeight: '500'
+              }}
+            >
+             
+                    <Loader /> Saving counter value
+               
+            </div>
+          ) : (
+            <span></span>
+          )}
           <div
             className='row'
             style={{
               border: '1px solid #B24242',
-             
-              borderBottomLeftRadius:'8px',
-              borderBottomRightRadius:'8px',
-              borderTopRightRadius:'8px',
-              borderTopLeftRadius:'8px',
+
+              borderBottomLeftRadius: '8px',
+              borderBottomRightRadius: '8px',
+              borderTopRightRadius: '8px',
+              borderTopLeftRadius: '8px',
               height: '100%',
 
               display: 'flex'
@@ -154,13 +191,11 @@ export default class Counter extends Component {
                 fontSize: '21px',
                 fontWeight: '900',
                 width: '60px',
-                  height: '56px',
-              
-                borderBottomLeftRadius:'8px',
-                
-               
-                borderTopLeftRadius:'8px'
-                
+                height: '56px',
+
+                borderBottomLeftRadius: '8px',
+
+                borderTopLeftRadius: '8px'
               }}
               onClick={this.handleDecrement}
             >
@@ -178,7 +213,6 @@ export default class Counter extends Component {
               <button
                 id='button2'
                 style={{
-                 
                   textAlign: 'center',
                   width: '60px',
                   height: '56px'
@@ -197,18 +231,24 @@ export default class Counter extends Component {
                 fontWeight: '900',
                 width: '60px',
                 height: '56px',
-               
-                borderBottomRightRadius:'8px',
-                borderTopRightRadius:'8px',
-                
-                
+
+                borderBottomRightRadius: '8px',
+                borderTopRightRadius: '8px'
               }}
               onClick={this.handleIncrement}
             >
               +
             </button>
           </div>
-          <div style={{ textAlign: 'left', marginTop: '5px', height: '16px', fontSize:'12px',fontWeight: '500',}}>
+          <div
+            style={{
+              textAlign: 'left',
+              marginTop: '5px',
+              height: '16px',
+              fontSize: '12px',
+              fontWeight: '500'
+            }}
+          >
             Counter Value: {this.state.count}
           </div>
         </div>
